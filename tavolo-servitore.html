@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tavolo Servitore · Cataratta</title>
+    <style>
+        :root {
+            --primary: #1e40af;
+            --success: #059669;
+            --error: #dc2626;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Pannello di sinistra: Immagine e aree sensibili */
+        #left-panel {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: #0b0f19;
+            border-right: 2px solid #334155;
+            position: relative;
+        }
+
+        .workspace-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #image-wrapper {
+            position: relative;
+            max-width: 90%;
+            max-height: 70%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #servitore-img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Hotspot visibili per capire dove cliccare */
+        .hotspot {
+            position: absolute;
+            background-color: rgba(56, 189, 248, 0.25);
+            border: 2px solid rgba(56, 189, 248, 0.9);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .hotspot:hover {
+            background-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+        }
+
+        /* Pannello di destra: Chat e log */
+        #right-panel {
+            flex: 1;
+            background-color: var(--surface);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chat-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--success);
+            padding-bottom: 12px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .chat-box {
+            background-color: rgba(15, 23, 42, 0.6);
+            border-left: 4px solid var(--success);
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        #request-text {
+            font-size: 1.25rem;
+            line-height: 1.4;
+        }
+
+        #log-panel {
+            height: 220px;
+            background-color: rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 12px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .log-success { color: #34d399; }
+        .log-error { color: #f87171; }
+
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--text-main);
+            border: none;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover { background-color: #1d4ed8; }
+        button.reset { background-color: #475569; }
+        button.reset:hover { background-color: #64748b; }
+
+        .back-to-simulatio {
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            z-index: 50;
+            width: auto;
+            margin: 0;
+            background: linear-gradient(180deg,#8df3e7,#3ec7b6);
+            color: #06110f;
+            font-weight: 800;
+            box-shadow: 0 10px 25px rgba(0,0,0,.35);
+        }
+    </style>
+</head>
+<body>
+    <button class="back-to-simulatio" onclick="window.location.href='index.html'">← Torna a SIMULATIO</button>
+
+    <div id="left-panel">
+        <div class="workspace-title">Tavolo Servitore - Cataratta</div>
+        <div id="image-wrapper">
+            <img src="Facoservitore.png" id="servitore-img" alt="Servitore Chirurgico">
+
+            <div class="hotspot" id="hotspot-blefarostato" style="top: 47%; left: 9%; width: 4%; height: 8%;" onclick="selezionaStrumento('blefarostato')"></div>
+            
+            <div class="hotspot" id="hotspot-lama-22" style="top: 65%; left: 30%; width: 3%; height: 3%;" onclick="selezionaStrumento('lama 2.2')"></div>
+            
+            <div class="hotspot" id="hotspot-lama-12" style="top: 65%; left: 25%; width: 3%; height: 4%;" onclick="selezionaStrumento('lama 1.2')"></div>
+            
+            <div class="hotspot" id="hotspot-viscoat" style="top: 65%; left: 35%; width: 3%; height: 8%;" onclick="selezionaStrumento('viscoat')"></div>
+
+            <div class="hotspot" id="hotspot-provisc" style="top: 67%; left: 58%; width: 4%; height: 8%;" onclick="selezionaStrumento('provisc')"></div>
+            
+            <div class="hotspot" id="hotspot-capsuloressi" style="top: 66%; left: 37%; width: 3%; height: 6%;" onclick="selezionaStrumento('capsuloressi')"></div>
+            
+            <div class="hotspot" id="hotspot-idrodissezione" style="top: 55%; left: 43%; width: 4%; height: 15%;" onclick="selezionaStrumento('idrodissezione')"></div>
+
+            <div class="hotspot" id="hotspot-facoemulsificatore" style="top: 36%; left: 75%; width: 12%; height: 15%;" onclick="selezionaStrumento('facoemulsificatore')"></div>
+            
+            <div class="hotspot" id="hotspot-chopper" style="top: 67%; left: 52%; width: 2%; height: 5%;" onclick="selezionaStrumento('chopper')"></div>
+            
+            <div class="hotspot" id="hotspot-lente-iol" style="top: 38%; left: 29%; width: 8%; height: 8%;" onclick="selezionaStrumento('lente IOL')"></div>
+            
+            <div class="hotspot" id="hotspot-aprokam" style="top: 42%; left: 62%; width: 2%; height: 18%;" onclick="selezionaStrumento('aprokam')"></div>
+        </div>
+    </div>
+
+    <div id="right-panel">
+        <div>
+            <div class="chat-header">👨‍⚕️ Istruzioni del Chirurgo</div>
+            <div class="chat-box">
+                <div id="request-text">"Iniziamo. Dammi il blefarostato."</div>
+            </div>
+
+            <div id="log-panel">
+                <div style="color:var(--text-sub)">[INFO] Clicca sull'area dello strumento richiesto.</div>
+            </div>
+        </div>
+
+        <div>
+            <button onclick="parlaTesto()">Ripeti richiesta (Audio)</button>
+            <button class="reset" onclick="resetGame()">Ricomincia</button>
+        </div>
+    </div>
+
+    <script>
+        const sequenzaIntervento = [
+            { strumento: "blefarostato", messaggio: "Iniziamo. Dammi il blefarostato." },
+            { strumento: "lama 2.2", messaggio: "Passami la lama 2.2 per l'incisione principale." },
+            { strumento: "lama 1.2", messaggio: "Ora la lama 1.2 per l'accesso secondario." },
+            { strumento: "viscoat", messaggio: "È il momento del viscoelastico: dammi il Viscoat." },
+            { strumento: "capsuloressi", messaggio: "Dammi la pinza per la capsuloressi." },
+            { strumento: "idrodissezione", messaggio: "Dammi la cannula per l'idrodissezione." },
+            { strumento: "facoemulsificatore", messaggio: "Procediamo con il nucleo: passami il facoemulsificatore." },
+            { strumento: "chopper", messaggio: "Ho bisogno del chopper per frammentare." },
+            { strumento: "provisc", messaggio: "Riempiamo il sacco capsulare: Provisc." },
+            { strumento: "lente IOL", messaggio: "Impiantiamo la lente IOL." },
+            { strumento: "aprokam", messaggio: "Per concludere l'intervento, dammi l'Aprokam." }
+        ];
+
+        let faseAttuale = 0;
+        const requestText = document.getElementById('request-text');
+        const logPanel = document.getElementById('log-panel');
+
+        function aggiornaTesto() {
+            if (faseAttuale < sequenzaIntervento.length) {
+                requestText.innerText = `"${sequenzaIntervento[faseAttuale].messaggio}"`;
+                parlaTesto(); // Fa parlare il chatbot
+            } else {
+                requestText.innerText = "Intervento terminato! Ottimo lavoro.";
+                parlaTesto();
+            }
+        }
+
+        // Sintesi Vocale integrata
+        function parlaTesto() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Ferma le richieste precedenti
+                const utterance = new SpeechSynthesisUtterance(requestText.innerText);
+                utterance.lang = 'it-IT';
+                utterance.rate = 1.0;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function selezionaStrumento(nomeStrumento) {
+            if (faseAttuale >= sequenzaIntervento.length) return;
+
+            const strumentoAtteso = sequenzaIntervento[faseAttuale].strumento;
+
+            if (nomeStrumento === strumentoAtteso) {
+                logPanel.innerHTML += `<div class="log-success">[✓] Corretto: ${nomeStrumento}.</div>`;
+                faseAttuale++;
+                aggiornaTesto();
+            } else {
+                logPanel.innerHTML += `<div class="log-error">[X] Errore: hai consegnato ${nomeStrumento} (era richiesto ${strumentoAtteso}).</div>`;
+            }
+            logPanel.scrollTop = logPanel.scrollHeight;
+        }
+
+        function resetGame() {
+            faseAttuale = 0;
+            logPanel.innerHTML = '<div style="color:gray;">[INFO] Simulatore riavviato.</div>';
+            aggiornaTesto();
+        }
+
+        // Avvio iniziale
+        aggiornaTesto();
+    </script>
+</body>
+</html>

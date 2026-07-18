@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<!-- Versione LIGHT: CSS, JS e asset sono esterni per GitHub Pages / Firebase / Netlify. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>SIMULATION LAB LIGHT · Cataratta</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+</head>
+<body>
+<div class="app">
+  <header class="topbar"><div class="brand"><div class="brandMark">SL</div><div class="brandText"><h1>SIMULATIO LAB · Cataratta Virtual Simulation · V9.8.1.1</h1><p>Maria Bianchi · cataratta occhio destro · mani clip-path più basse e localizzate</p></div></div><div class="phaseLine" id="phaseLine"></div><div class="topActions"><button class="iconBtn" id="voiceBtn" title="Voce">S</button><button class="iconBtn" id="resetBtn" title="Ricomincia">R</button><button class="iconBtn" id="fullBtn" title="Schermo intero">⛶</button></div></header>
+  <main class="main">
+    <section class="scene stage-ready" id="scene"><div class="photoScene"></div>
+<div class="handClipFrame" aria-hidden="true">
+  <div class="handClip surgeon-main"></div>
+  <div class="handClip surgeon-support"></div>
+  <div class="handClip scrub-hands"></div>
+</div>
+<div class="actorLayer phase-patient" id="actorLayer" aria-label="Équipe di sala interattiva">
+  <button class="actor surgeon" data-actor="surgeon" title="Chirurgo oculista">
+    <span class="actorRole">CHIRURGO</span><span class="actorHead"><span class="actorEyes"></span><span class="actorMask"></span></span><span class="actorBody"><span class="actorArm left"></span><span class="actorArm right"></span></span><span class="actorBadge">Dott. Ricci</span>
+  </button>
+  <button class="actor scrub" data-actor="scrub" title="Infermiere strumentista">
+    <span class="actorRole">STRUMENTISTA</span><span class="actorHead"><span class="actorEyes"></span><span class="actorMask"></span></span><span class="actorBody"><span class="actorArm left"></span><span class="actorArm right"></span></span><span class="actorBadge">Laura</span>
+  </button>
+  <button class="actor circulating" data-actor="circulating" title="Infermiere di sala">
+    <span class="actorRole">SALA</span><span class="actorHead"><span class="actorEyes"></span><span class="actorMask"></span></span><span class="actorBody"><span class="actorArm left"></span><span class="actorArm right"></span></span><span class="actorBadge">Elena</span>
+  </button>
+  <button class="actor anesthetist" data-actor="anesthetist" title="Anestesista">
+    <span class="actorRole">ANESTESIA</span><span class="actorHead"><span class="actorEyes"></span><span class="actorMask"></span></span><span class="actorBody"><span class="actorArm left"></span><span class="actorArm right"></span></span><span class="actorBadge">Dott. Conti</span>
+  </button>
+</div>
+<div class="teamHint">Équipe interattiva<small>Clicca sui professionisti: si muovono e parlano in base alla fase.</small></div>
+<div class="actorToast" id="actorToast"><b id="actorToastWho">TEAM</b><span id="actorToastText"></span></div>
+<div class="statusStrip"><div class="eye3dMonitor"><div class="monitorHead"><span>OCCHIO 3D · MODELLO LOCALE</span><span id="monitorStatus">PRONTO</span></div><model-viewer id="eyePreview" src="assets/models/eye-model.gltf" camera-controls auto-rotate rotation-per-second="10deg" interaction-prompt="none" shadow-intensity="1" exposure="1.05" alt="Modello tridimensionale realistico dell'occhio"></model-viewer><div class="eye3dInfo"><span>Ruota e ingrandisci il modello reale caricato.</span><button id="openEyeBtn" type="button">APRI 3D</button></div><div class="hiddenVitals" aria-hidden="true"><span id="hr">78</span><span id="bp">132/74</span><span id="spo">98</span><span id="rr">16</span></div></div><div class="patientChip"><b>Maria Bianchi</b><small>68 anni · occhio destro</small></div></div><button class="eyeHotspot active" id="eyeHotspot" data-label="Campo oculare" title="Campo operatorio oculare"></button><button class="openSurgery" id="openSurgeryBtn" type="button" onclick="window.location.href='tavolo-servitore.html'">TAVOLO SERVITORE · 3D</button><div class="sceneNote" id="sceneNote">Paziente sul lettino · sala pronta per la verifica iniziale</div><div class="dialogue" id="dialogue"><div class="speaker" id="speaker">TEAM</div><div class="speech" id="speech"></div></div><div class="toolDock" id="toolDock"><button class="tool active" data-tool="sterile"><span class="toolIcon">✦</span><span class="toolText">Campo</span></button><button class="tool" data-tool="scope"><span class="toolIcon">⌕</span><span class="toolText">Microscopio</span></button><button class="tool" data-tool="incision"><span class="toolIcon">╱</span><span class="toolText">Incisione</span></button><button class="tool" data-tool="phaco"><span class="toolIcon">◌</span><span class="toolText">Faco</span></button><button class="tool" data-tool="stop"><span class="toolIcon">Ⅱ</span><span class="toolText">Stop</span></button><button class="tool" data-tool="lens"><span class="toolIcon">◎</span><span class="toolText">Lente</span></button><button class="tool" data-tool="hydrate"><span class="toolIcon">≈</span><span class="toolText">Idrata</span></button><button class="tool" data-tool="signout"><span class="toolIcon">✓</span><span class="toolText">Sign-out</span></button></div></section>
+    <aside class="panel"><div class="tabs"><button class="tab active" data-tab="patient">PAZIENTE</button><button class="tab" data-tab="safety">SICUREZZA</button><button class="tab" data-tab="team">TEAM</button><button class="tab" data-tab="anesthesia">ANESTESIA</button><button class="tab" data-tab="operate">INTERVENTO</button><button class="tab" data-tab="debrief">DEBRIEF</button></div><div class="panelContent" id="panelContent"></div></aside>
+  </main>
+  <footer class="bottomBar"><div class="scoreBox"><div class="scoreCircle" id="scoreCircle"><b id="score">0</b></div><div class="scoreText"><b>Clinical score</b><small id="scoreCaption">0 / 100</small></div></div><div class="timeline" id="timeline"><div class="event">Scenario pronto</div></div><div class="phaseBox"><b id="phaseName">Accoglienza</b><small id="phaseHint">Identità, procedura, lateralità</small></div></footer>
+</div>
+
+<div class="surgeryModal hidden" id="surgeryModal" aria-hidden="true">
+  <div class="surgeryTop">
+    <div class="surgeryTitle"><b>V6 · Chirurgia dinamica della cataratta</b><small>Modello chirurgico realistico · selezione strumenti · evento paziente</small></div>
+    <div class="surgeryStatus" id="surgeryStatus">Viewer in caricamento</div>
+    <button class="surgeryClose" id="closeSurgeryBtn" type="button" aria-label="Chiudi">×</button>
+  </div>
+  <div class="surgeryBody">
+    <section class="viewerColumn">
+      <div class="viewerFrame" id="viewerFrame">
+        <div class="viewerLoading" id="viewerLoading">CARICAMENTO CHIRURGIA 3D…</div>
+        <div class="viewerBadge"><b id="viewerStageTitle">Preparazione del campo</b><span id="viewerStageText">Completa le verifiche e scegli lo strumento richiesto.</span></div>
+        <iframe id="sketchfabViewer" title="Cataract Surgery Animation" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
+        <div class="localEyePanel hidden" id="localEyePanel"><div class="localEyeHead"><b>Occhio anatomico 3D · file locale</b><button id="closeLocalEye" type="button">Torna alla chirurgia</button></div><model-viewer src="assets/models/eye-model.gltf" camera-controls auto-rotate shadow-intensity="1" exposure="1.05" interaction-prompt="auto" alt="Occhio anatomico tridimensionale"></model-viewer></div>
+      </div>
+      <div class="viewerControls">
+        <button id="viewerPlay" type="button">▶ RIPRODUCI</button><button id="viewerPause" type="button">Ⅱ PAUSA</button><button id="viewerReverse" type="button">↶ RETRAI</button><button id="showLocalEye" type="button">◉ OCCHIO ANATOMICO</button><button class="danger" id="emergencyStop" type="button">STOP PROCEDURA</button><span class="speed">Velocità</span><select id="viewerSpeed"><option value="0.5">0,5×</option><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option></select>
+      </div>
+    </section>
+    <aside class="instrumentPanel">
+      <div class="patientState stable" id="patientState"><b>Maria Bianchi · collaborante</b><span>Respirazione regolare, capo fermo. La paziente può parlare durante la procedura.</span></div>
+      <div class="procedureStep"><div class="stepCount" id="stepCount">PASSAGGIO 1 DI 7</div><h3 id="stepTitle">Incisioni corneali</h3><p id="stepInstruction">Il chirurgo richiede il cheratomo. Selezionalo e portalo nel campo.</p></div>
+      <div class="instrumentTray" id="instrumentTray"></div>
+      <div><div class="fieldDrop" id="surgicalFieldDrop">TRASCINA QUI LO STRUMENTO<br><small>oppure selezionalo e clicca il campo</small></div><div class="closedLoop"><b>COMUNICAZIONE CLOSED-LOOP</b><span id="closedLoopText">Chirurgo: «Cheratomo da 2,2.»</span></div></div>
+    </aside>
+  </div>
+</div>
+
+<div class="startScreen" id="startScreen"><div class="startCard"><div class="kicker">SIMULAZIONE DIDATTICA</div><h2>Sala operatoria oculistica</h2><p>Maria Bianchi entra in sala per intervento di cataratta all’occhio destro. Il paziente è al centro della scena: verifica, time-out, campo sterile, tavolo servitore interno, video 3D e gestione del movimento improvviso.</p><div class="startGrid"><div class="startPill">Paziente visibile<b>Lettino e campo oculare</b></div><div class="startPill">Tavolo servitore<b>Interno alla simulazione</b></div><div class="startPill">Evento dinamico<b>Stop e stabilizzazione</b></div></div><button class="primary" id="startBtn">Entra in sala operatoria</button></div></div>
+<div class="modal hidden" id="modal"><div class="modalCard"><div class="kicker">DEBRIEF FINALE</div><h2 id="finalTitle">Scenario completato</h2><p class="lead" id="finalText"></p><div class="resultGrid"><div class="result"><small>Punteggio</small><b id="finalScore">0</b></div><div class="result"><small>Azioni corrette</small><b id="correctCount">0</b></div><div class="result"><small>Criticità</small><b id="errorCount">0</b></div></div><div id="feedback"></div><div class="closeRow"><button class="iconBtn" id="modalReset">R</button><button class="primary" id="modalClose">Chiudi</button></div></div></div>
+<script src="js/app.js"></script>
+
+<script src="js/app.js"></script>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>

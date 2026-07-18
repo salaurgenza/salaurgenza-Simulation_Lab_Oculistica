@@ -1,0 +1,50 @@
+{
+  "source": "/mnt/data/SIMULATION_LAB(3).html",
+  "output_dir": "/mnt/data/simulation_lab_light",
+  "zip": "/mnt/data/simulation_lab_light.zip",
+  "total_files": 24,
+  "largest_files": [
+    [
+      "assets/models/eye-model.gltf",
+      10936086
+    ],
+    [
+      "assets/images/scene-operating-room.png",
+      1766588
+    ],
+    [
+      "js/app.js",
+      36906
+    ],
+    [
+      "css/style.css",
+      33301
+    ],
+    [
+      "index.html",
+      10719
+    ],
+    [
+      "assets/images/image-06.png",
+      5248
+    ],
+    [
+      "assets/images/image-10.png",
+      5221
+    ],
+    [
+      "assets/images/image-02.png",
+      5204
+    ],
+    [
+      "assets/images/image-08.png",
+      4996
+    ],
+    [
+      "assets/images/image-13.png",
+      4971
+    ]
+  ],
+  "total_size_bytes": 12858240,
+  "assets_extracted": 18
+}
